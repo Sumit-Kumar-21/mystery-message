@@ -1,8 +1,7 @@
-import bcrypt from 'bcryptjs'
-
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
 import { sendVerificationEmail } from '@/helpers/sendVerificationEmail';
+import { hashPassword } from '@/lib/common';
 
 export const POST = async (req: Request) => {
 
@@ -29,7 +28,7 @@ export const POST = async (req: Request) => {
 
         const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
 
-        const hashedPass = await bcrypt.hash(password, 10);
+        const hashedPass = await hashPassword(password)
         const expiryDate = new Date();
         expiryDate.setHours(expiryDate.getHours() + 1);
 

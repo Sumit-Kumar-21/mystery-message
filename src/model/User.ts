@@ -1,11 +1,8 @@
-import mongoose, { Schema, Document } from "mongoose";
+import { IMessage, IUser } from "@/types";
+import mongoose, { Schema } from "mongoose";
 
-export interface Message extends Document {
-    content: string;
-    createdAt: Date;
-}
 
-const MessageSchema: Schema<Message> = new Schema({
+const MessageSchema: Schema<IMessage> = new Schema({
     content: {
         type: String,
         required: true,
@@ -17,18 +14,7 @@ const MessageSchema: Schema<Message> = new Schema({
     }
 });
 
-export interface User extends Document {
-    username: string;
-    email: string;
-    password: string;
-    verifyCode: string;
-    verifyCodeExpiry: Date;
-    isVerified: boolean;
-    isAcceptingMessage: boolean;
-    messages: Array<Message>
-}
-
-const UserSchema: Schema<User> = new Schema({
+const UserSchema: Schema<IUser> = new Schema({
     username: {
         type: String,
         required: [true, 'Username is required'],
@@ -67,7 +53,7 @@ const UserSchema: Schema<User> = new Schema({
     messages: [MessageSchema]
 });
 
-const UserModel = (mongoose.models.User as mongoose.Model<User>) || (mongoose.model<User>("User", UserSchema));
+const UserModel = (mongoose.models.User as mongoose.Model<IUser>) || (mongoose.model<IUser>("User", UserSchema));
 // export const MessageModel = (mongoose.models.Message as mongoose.Model<Message>) || (mongoose.model<Message>("Message", MessageSchema));
 
 export default UserModel;

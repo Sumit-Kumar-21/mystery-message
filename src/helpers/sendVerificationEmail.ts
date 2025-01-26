@@ -1,6 +1,6 @@
 import { resend } from "@/lib/resend";
 import VerificationEmailTemp from "../../emails/verificationEmailTemp";
-import { ApiResponse } from "@/types/apiResponse";
+import { IApiResponse } from "@/types/apiResponse";
 
 interface SendVerificationEmailProps {
     email: string;
@@ -8,7 +8,7 @@ interface SendVerificationEmailProps {
     otp: string
 }
 
-export async function sendVerificationEmail({ email, username, otp }: SendVerificationEmailProps): Promise<ApiResponse> {
+export async function sendVerificationEmail({ email, username, otp }: SendVerificationEmailProps): Promise<IApiResponse> {
 
     try {
 
