@@ -10,25 +10,24 @@ interface SendVerificationEmailProps {
 
 export async function sendVerificationEmail({ email, username, otp }: SendVerificationEmailProps): Promise<IApiResponse> {
 
-    try {
-
-        await resend.emails.send({
-            from: 'Acme <onboarding@resend.dev>',
-            to: email,
-            subject: 'Mystery message | Verification code',
-            react: VerificationEmailTemp({ username, otp}),
-          });
-
-        return {
-            success: true,
-            message: 'Verification email sent successfully'
-        }
-    } catch (error) {
+    const { data, error } = await resend.emails.send({
+        from: 'Acme <onboarding@resend.dev>',
+        to: email,
+        subject: 'Mystery message | Verification code',
+        react: VerificationEmailTemp({ username, otp }),
+    });
+    
+    if (error) {
         console.error('Error sending verification email', error);
         return {
             success: false,
             message: 'Failed to send verification email'
-        }
-
+        };
+    }
+    
+    console.log("Message sent with id:", data?.id)
+    return {
+        success: true,
+        message: 'Verification email sent successfully'
     }
 }

@@ -1,6 +1,5 @@
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
-import { sendVerificationEmail } from '@/helpers/sendVerificationEmail';
 import { hashPassword } from '@/lib/common';
 
 export const POST = async (req: Request) => {
@@ -9,6 +8,12 @@ export const POST = async (req: Request) => {
 
     try {
         const { username, email, password } = await req.json();
+
+        console.log(username, email, password);
+
+        const allusers= await UserModel.find()
+        console.log("🚀 ~ POST ~ allusers:", allusers)
+        
         const userExistByUsername = await UserModel.findOne({
             username,
             isVerified: true
@@ -61,21 +66,22 @@ export const POST = async (req: Request) => {
         }
 
         // send verification email
-        const { success, message } = await sendVerificationEmail({
-            email,
-            username,
-            otp: verificationCode
-        })
+        // const { success, message } = await sendVerificationEmail({
+        //     email,
+        //     username,
+        //     otp: verificationCode
+        // })
 
-        if (!success) {
-            return Response.json(
-                {
-                    success: false,
-                    message: message
-                },
-                { status: 500 }
-            )
-        }
+
+        // if (!success) {
+        //     return Response.json(
+        //         {
+        //             success: false,
+        //             message: "message"
+        //         },
+        //         { status: 500 }
+        //     )
+        // }
 
         return Response.json(
             {
