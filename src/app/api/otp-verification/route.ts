@@ -75,8 +75,6 @@ export const GET = async (req: Request) => {
             { status: 400 }
         )
 
-        
-        
     } catch (error) {
         console.log('Error while verify otp: ', error);
         return Response.json(

@@ -32,8 +32,7 @@ export const GET = async (req: Request ) => {
         const userExist = await UserModel.findOne({
             username: data,
             isVerified: true
-        })
-        console.log("🚀 ~ GET ~ userExist:", userExist)
+        });
 
         return userExist ? Response.json(
             {
